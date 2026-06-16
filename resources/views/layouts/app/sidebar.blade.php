@@ -14,13 +14,6 @@
                 <flux:sidebar.group :heading="__('Platform')" class="grid">
                     <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
-
-            <flux:sidebar.nav>
-                <flux:sidebar.group :heading="__('Platform')" class="grid">
-                    <flux:sidebar.item icon="home" :href="route('user.index')" :current="request()->routeIs('user.index')" wire:navigate>
-                        {{ __('Users') }}
-                    </flux:sidebar.item>
-            
                     </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
