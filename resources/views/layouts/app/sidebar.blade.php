@@ -15,6 +15,18 @@
                     <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
+
+                <flux:sidebar.item icon="home" :href="route('framecategories.index')" :current="request()->routeIs('framecategories.index')" wire:navigate>
+                        {{ __('Frame Categories') }}
+                    </flux:sidebar.item>
+
+                <flux:sidebar.item icon="home" :href="route('photoframe.index')" :current="request()->routeIs('photoframe.index')" wire:navigate>
+                        {{ __('Photo Frame') }}
+                    </flux:sidebar.item>
+
+                <flux:sidebar.item icon="home" :href="route('userphotos.index')" :current="request()->routeIs('userphotos.index')" wire:navigate>
+                        {{ __('User Photos') }}
+                    </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
 
