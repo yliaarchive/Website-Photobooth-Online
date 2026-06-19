@@ -4,6 +4,7 @@ use Livewire\Component;
 use Livewire\Attributes\Computed;
 use Livewire\WithPagination;
 use App\Models\FrameCategories;
+use App\Livewire\Forms\FrameCategoriesForm;
 
 new class extends Component
 {
@@ -13,6 +14,10 @@ new class extends Component
     {
         return FrameCategories::latest()->paginate(10);
     }
+
+     public function edit($id){
+        $this->dispatch('edit-framecategories', id: $id);
+    }
 };
 ?>
 
@@ -21,9 +26,13 @@ new class extends Component
     <flux:subheading size="lg" class="text-zinc-600 dark:text-zinc-400">Manage your frame categories</flux:subheading>
     <flux:separator variant="subtle" />
 
-    <flux:modal.trigger name="create-framecategory">
+    <flux:modal.trigger name="create-framecategories">
         <flux:button variant="primary" icon="plus" color="primary">Add Frame Category</flux:button>
     </flux:modal.trigger>
+
+    <livewire:framecategories.create />
+    <livewire:framecategories.edit />
+    <x-flash-message />
 
     <div class="overflow-x-auto">
        <flux:table :paginate="$this->FrameCategories">
