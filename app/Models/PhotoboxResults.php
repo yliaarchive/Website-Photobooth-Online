@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FrameCategories extends Model
+class PhotoboxResults extends Model
 {
     protected $fillable = [
-        'name',
-        'description',
+        'user_id',
+        'frame_id',
+        'result_file',
     ];
 }

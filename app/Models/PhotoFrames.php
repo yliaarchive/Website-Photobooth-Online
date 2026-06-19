@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PhotoFrame extends Model
+class PhotoFrames extends Model
 {
     protected $fillable = [
         'nama_frame',

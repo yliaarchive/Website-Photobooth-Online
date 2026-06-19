@@ -20,12 +20,20 @@
                         {{ __('Frame Categories') }}
                     </flux:sidebar.item>
 
-                <flux:sidebar.item icon="home" :href="route('photoframe.index')" :current="request()->routeIs('photoframe.index')" wire:navigate>
-                        {{ __('Photo Frame') }}
+                <flux:sidebar.item icon="home" :href="route('photoframes.index')" :current="request()->routeIs('photoframes.index')" wire:navigate>
+                        {{ __('Photo Frames') }}
                     </flux:sidebar.item>
 
                 <flux:sidebar.item icon="home" :href="route('userphotos.index')" :current="request()->routeIs('userphotos.index')" wire:navigate>
                         {{ __('User Photos') }}
+                    </flux:sidebar.item>
+
+                <flux:sidebar.item icon="home" :href="route('photoboxresults.index')" :current="request()->routeIs('photoboxresults.index')" wire:navigate>
+                        {{ __('Photobox Results') }}
+                    </flux:sidebar.item>
+
+                <flux:sidebar.item icon="home" :href="route('downloads.index')" :current="request()->routeIs('downloads.index')" wire:navigate>
+                        {{ __('Downloads') }}
                     </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>

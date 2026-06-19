@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FrameCategories extends Model
+class Downloads extends Model
 {
     protected $fillable = [
-        'name',
-        'description',
+        'user_id',
+        'result_id',
+        'download_date',
     ];
 }
