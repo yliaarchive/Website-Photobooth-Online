@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_frame');
             $table->string('tema')->nullable();
             $table->foreignId('category_id')->constrained('frame_categories');
-            $table->string('gambar_frame');
+            $table->string('gambar_frame')->nullable();
             $table->timestamps();
         });
     }

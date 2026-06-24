@@ -90,7 +90,6 @@ new class extends Component
             </flux:table.columns>
 
             <flux:table.rows>
-                <!-- PERBAIKAN: gunakan $userphoto agar konsisten -->
                 @foreach ($this->UserPhotos as $userphoto)
                     <flux:table.row :key="$userphoto->id">
 
@@ -99,12 +98,10 @@ new class extends Component
                         </flux:table.cell>
                         
                         <flux:table.cell class="flex items-center gap-3">
-                            <!-- PERBAIKAN: Ambil nama user dari relasi -->
                             {{ $userphoto->user->name ?? 'Unknown User' }}
                         </flux:table.cell>
 
                         <flux:table.cell class="text-zinc-500 dark:text-zinc-400">
-                            <!-- PERBAIKAN: Menampilkan gambar kecil / thumbnail -->
                             @if($userphoto->file_photo)
                                 <img src="{{ asset('storage/' . $userphoto->file_photo) }}" alt="Photo" class="w-16 h-16 object-cover rounded shadow-sm">
                             @else
@@ -113,7 +110,6 @@ new class extends Component
                         </flux:table.cell>
 
                         <flux:table.cell class="text-zinc-500 dark:text-zinc-400">
-                            <!-- PERBAIKAN: Sesuaikan dengan nama kolom di DB (upload_time) -->
                             {{ $userphoto->upload_time ?? '-' }}
                         </flux:table.cell>
 
@@ -130,7 +126,6 @@ new class extends Component
 
                                     <flux:menu.separator />
 
-                                    <!-- PERBAIKAN: Penggunaan array payload di $dispatch dan wire:confirm bawaan Livewire -->
                                     <flux:menu.item variant="danger" icon="trash" wire:click="$dispatch('confirm-delete', { id: {{ $userphoto->id }} })" wire:confirm="Are you sure you want to delete this photo?">
                                         Delete
                                     </flux:menu.item>
