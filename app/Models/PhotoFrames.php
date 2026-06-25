@@ -12,4 +12,9 @@ class PhotoFrames extends Model
         'category_id',
         'gambar_frame',
     ];
+
+    public function frameCategories()
+    {
+        return $this->belongsTo(FrameCategories::class, 'category_id');
+    }
 }

@@ -19,18 +19,15 @@ new class extends Component
     #[Computed]
     public function UserPhotos()
     {
-        // Gunakan eager loading (with) untuk menarik data user sekalian
         return UserPhotos::with('user')->latest()->paginate(10);
     }
 
-    // Fungsi untuk memunculkan modal tambah
     public function create()
     {
         $this->isEdit = false;
         $this->form->reset();
     }
 
-    // Fungsi menyimpan data
     public function save()
     {
         if ($this->isEdit) {
@@ -39,11 +36,9 @@ new class extends Component
             $this->form->store();
         }
 
-        // Tutup modal
         Flux::modal('user-photos-modal')->close();
     }
 
-    // Fungsi edit
     public function edit(UserPhotos $userPhoto)
     {
         $this->isEdit = true;
@@ -51,17 +46,14 @@ new class extends Component
         Flux::modal('user-photos-modal')->show();
     }
 
-    // Menangani event delete
     #[On('confirm-delete')]
     public function delete($id)
     {
         $photo = UserPhotos::find($id);
         if ($photo) {
-            // Hapus file fisik
             if (Storage::disk('public')->exists($photo->file_photo)) {
                 Storage::disk('public')->delete($photo->file_photo);
             }
-            // Hapus dari database
             $photo->delete();
         }
     }
@@ -73,7 +65,6 @@ new class extends Component
     <flux:subheading size="lg" class="text-zinc-600 dark:text-zinc-400">Upload your photos here</flux:subheading>
     <flux:separator variant="subtle" />
 
-    <!-- Tombol Create memanggil method create() untuk mereset form lalu membuka modal -->
     <flux:modal.trigger name="user-photos-modal">
         <flux:button variant="primary" icon="plus" color="primary" wire:click="create">Add your photos</flux:button>
     </flux:modal.trigger>
@@ -138,7 +129,6 @@ new class extends Component
         </flux:table>
     </div>
 
-    <!-- MODAL FORM UPLOAD -->
     <flux:modal name="user-photos-modal" class="md:w-96">
         <form wire:submit="save" class="space-y-6">
             <div>
@@ -146,13 +136,10 @@ new class extends Component
                 <flux:subheading>Choose a picture from your device.</flux:subheading>
             </div>
 
-            <!-- Input File dari Flux (bisa diganti input biasa jika Flux belum support file sempurna) -->
             <flux:input type="file" wire:model="form.file_photo" label="Photo File" />
 
-            <!-- Loading indicator saat upload file ke server Livewire -->
             <div wire:loading wire:target="form.file_photo" class="text-sm text-blue-500">Uploading...</div>
 
-            <!-- Preview Gambar Sebelum Disave -->
             @if ($form->file_photo && !is_string($form->file_photo))
                 <img src="{{ $form->file_photo->temporaryUrl() }}" class="w-full h-48 object-cover rounded-lg border">
             @endif

@@ -12,7 +12,6 @@ class UserPhotos extends Model
         'upload_time',
     ];
 
-    // Tambahkan relasi ke User
     public function user()
     {
         return $this->belongsTo(User::class);
