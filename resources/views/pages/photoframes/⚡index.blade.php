@@ -138,8 +138,8 @@ new class extends Component
                 <flux:subheading class="mt-2">Manage your Photo Frame (PNG format only).</flux:subheading>
             </div>
 
-            <flux:input wire:model="form.nama_frame" label="Nama Frame" placeholder="Contoh: Summer Vibes" />
-            <flux:input wire:model="form.tema" label="Tema (Opsional)" placeholder="Contoh: Pantai, Minimalist" />
+            <flux:input wire:model="form.nama_frame" label="Nama Frame" placeholder="Contoh: Summer " />
+            <flux:input wire:model="form.tema" label="Tema (Opsional)" placeholder="Contoh: Holiday Addict" />
             
             <flux:select wire:model="form.category_id" label="Kategori Frame">
                 <option value="">Pilih Kategori</option>
