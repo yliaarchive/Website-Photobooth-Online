@@ -12,29 +12,35 @@
 
             <flux:sidebar.nav>
                 <flux:sidebar.group :heading="__('Platform')" class="grid">
+                    
                     <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
 
-                <flux:sidebar.item icon="rectangle-group" :href="route('framecategories.index')" :current="request()->routeIs('framecategories.index')" wire:navigate>
-                        {{ __('Frame Categories') }}
-                    </flux:sidebar.item>
+                    <!-- BATAS KHUSUS ADMIN MULAI DI SINI -->
+                    @if (auth()->user()?->role === 'admin')
+                        <flux:sidebar.item icon="rectangle-group" :href="route('framecategories.index')" :current="request()->routeIs('framecategories.index')" wire:navigate>
+                            {{ __('Frame Categories') }}
+                        </flux:sidebar.item>
 
-                <flux:sidebar.item icon="swatch" :href="route('photoframes.index')" :current="request()->routeIs('photoframes.index')" wire:navigate>
-                        {{ __('Photo Frames') }}
-                    </flux:sidebar.item>
+                        <flux:sidebar.item icon="swatch" :href="route('photoframes.index')" :current="request()->routeIs('photoframes.index')" wire:navigate>
+                            {{ __('Photo Frames') }}
+                        </flux:sidebar.item>
 
-                <flux:sidebar.item icon="camera" :href="route('userphotos.index')" :current="request()->routeIs('userphotos.index')" wire:navigate>
-                        {{ __('User Photos') }}
-                    </flux:sidebar.item>
+                        <flux:sidebar.item icon="camera" :href="route('userphotos.index')" :current="request()->routeIs('userphotos.index')" wire:navigate>
+                            {{ __('User Photos') }}
+                        </flux:sidebar.item>
+                    @endif
+                    <!-- BATAS KHUSUS ADMIN BERAKHIR DI SINI -->
 
-                <flux:sidebar.item icon="sparkles" :href="route('photoboxresults.index')" :current="request()->routeIs('photoboxresults.index')" wire:navigate>
+                    <flux:sidebar.item icon="sparkles" :href="route('photoboxresults.index')" :current="request()->routeIs('photoboxresults.index')" wire:navigate>
                         {{ __('Photobox Results') }}
                     </flux:sidebar.item>
 
-                <flux:sidebar.item icon="arrow-down-tray" :href="route('downloads.index')" :current="request()->routeIs('downloads.index')" wire:navigate>
+                    <flux:sidebar.item icon="arrow-down-tray" :href="route('downloads.index')" :current="request()->routeIs('downloads.index')" wire:navigate>
                         {{ __('Downloads') }}
                     </flux:sidebar.item>
+                    
                 </flux:sidebar.group>
             </flux:sidebar.nav>
 
