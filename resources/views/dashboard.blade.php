@@ -7,6 +7,7 @@
             'users' => \App\Models\User::count(),
             'frames' => \App\Models\PhotoFrames::count(),
             'results' => \App\Models\PhotoboxResults::count(),
+            'downloads' => \App\Models\Downloads::count(),
             'recent' => \App\Models\PhotoboxResults::with(['user', 'frame'])->latest()->take(5)->get()
         ] : null;
 
@@ -20,104 +21,95 @@
         </div>
 
         @if($isAdmin)
-
-        <div class="rounded-3xl bg-gradient-to-r from-pink-500 via-fuchsia-500 to-pink-400 p-8 text-white shadow-lg">
-
+        <div class="rounded-3xl bg-gradient-to-r from-pink-400 via-fuchsia-400 to-purple-400 p-8 text-white shadow-xl">
             <h2 class="text-3xl font-bold">
                 Halo, Admin 👋
             </h2>
 
-            <p class="mt-2 text-pink-100">
+            <p class="mt-2 text-pink-50">
                 Selamat datang kembali di Website Photobooth Online.
             </p>
-
         </div>
 
             <!-- Statistik -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
 
                 <!-- User -->
-                <div class="bg-white rounded-3xl shadow-sm border border-pink-100 p-6 hover:shadow-lg transition">
-                    <div class="flex items-center justify-between">
+                <div class="bg-white rounded-3xl border border-pink-100 border-t-4 border-t-pink-400 p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    <div class="flex justify-between items-center">
                         <div>
-                            <p class="text-zinc-500 text-sm">
+                            <p class="text-gray-500 font-medium">
                                 Total User
-                            </p>
+                             </p>
 
-                            <h2 class="text-4xl font-bold mt-3 text-zinc-800">
+                            <h2 class="text-5xl font-bold mt-2 text-pink-600">
                                 {{ $stats['users'] }}
                             </h2>
+                        </div>
+
+                        <div class="w-16 h-16 rounded-2xl bg-pink-100 flex items-center justify-center text-3xl shadow-sm">
+                            👤
+                        </div>
+                    </div>
+                </div>
+
+            <!-- Frame -->
+            <div class="bg-white rounded-3xl border border-fuchsia-100 border-t-4 border-t-fuchsia-400 p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-500 font-medium">
+                            Total Frame
+                        </p>
+
+                        <h2 class="text-5xl font-bold mt-2 text-fuchsia-600">
+                            {{ $stats['frames'] }}
+                        </h2>
                     </div>
 
-                    <div class="w-14 h-14 rounded-2xl bg-pink-100 flex items-center justify-center text-3xl">
-                        👤
+                    <div class="w-16 h-16 rounded-2xl bg-fuchsia-100 flex items-center justify-center text-3xl shadow-sm">
+                        🖼
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Frame -->
-        <div class="bg-white rounded-3xl shadow-sm border border-purple-100 p-6 hover:shadow-lg transition">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-zinc-500 text-sm">
-                        Total Frame
-                    </p>
+            <!-- Photobox -->
+            <div class="bg-white rounded-3xl border border-purple-100 border-t-4 border-t-purple-400 p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-500 font-medium">
+                            Total Photobox
+                        </p>
 
-                    <h2 class="text-4xl font-bold mt-3 text-zinc-800">
-                        {{ $stats['frames'] }}
-                    </h2>
-                </div>
+                        <h2 class="text-5xl font-bold mt-2 text-purple-600">
+                            {{ $stats['results'] }}
+                        </h2>
+                    </div>
 
-                <div class="w-14 h-14 rounded-2xl bg-purple-100 flex items-center justify-center text-3xl">
-                    🖼
-                </div>
-            </div>
-        </div>
-
-        <!-- Photobox -->
-        <div class="bg-white rounded-3xl shadow-sm border border-blue-100 p-6 hover:shadow-lg transition">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-zinc-500 text-sm">
-                        Total Photobox
-                    </p>
-
-                    <h2 class="text-4xl font-bold mt-3 text-zinc-800">
-                        {{ $stats['results'] }}
-                    </h2>
-                </div>
-
-                <div class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center text-3xl">
-                    📸
+                    <div class="w-16 h-16 rounded-2xl bg-purple-100 flex items-center justify-center text-3xl shadow-sm">
+                        📸
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Download -->
-        <div class="bg-white rounded-3xl shadow-sm border border-green-100 p-6 hover:shadow-lg transition">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-zinc-500 text-sm">
-                        Total Download
-                    </p>
+            <!-- Download -->
+            <div class="bg-white rounded-3xl border border-violet-100 border-t-4 border-t-violet-400 p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-500 font-medium">
+                            Total Download
+                        </p>
 
-                    <h2 class="text-4xl font-bold mt-3 text-zinc-800">
-                        {{ \App\Models\Downloads::count() }}
-                    </h2>
-                </div>
+                        <h2 class="text-5xl font-bold mt-2 text-violet-600">
+                            {{ $stats['downloads'] }}
+                        </h2>
+                    </div>
 
-                <div class="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center text-3xl">
-                    ⬇
+                    <div class="w-16 h-16 rounded-2xl bg-violet-100 flex items-center justify-center text-3xl shadow-sm">
+                        ⬇
+                    </div>
                 </div>
             </div>
-        </div>
-
-    </div>
-
-</div>
-
-@else
+            @else
             <div class="bg-gradient-to-r from-pink-50 to-purple-50 rounded-3xl border border-pink-100 shadow-sm p-8">
 
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
