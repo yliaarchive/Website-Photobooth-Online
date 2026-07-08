@@ -20,36 +20,134 @@
         </div>
 
         @if($isAdmin)
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                @foreach(['Total Pengguna' => [$stats['users'], 'pink'], 'Total Frame Aktif' => [$stats['frames'], 'purple'], 'Photobox Tergenerate' => [$stats['results'], 'blue']] as $label => $data)
-                    <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm border-t-4 border-t-{{$data[1]}}-400 transition hover:shadow-md">
-                        <p class="text-sm font-medium text-zinc-500 uppercase tracking-wider">{{ $label }}</p>
-                        <p class="text-4xl font-bold text-zinc-800 mt-2">{{ $data[0] }}</p>
+
+        <div class="rounded-3xl bg-gradient-to-r from-pink-500 via-fuchsia-500 to-pink-400 p-8 text-white shadow-lg">
+
+            <h2 class="text-3xl font-bold">
+                Halo, Admin 👋
+            </h2>
+
+            <p class="mt-2 text-pink-100">
+                Selamat datang kembali di Website Photobooth Online.
+            </p>
+
+        </div>
+
+            <!-- Statistik -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+
+                <!-- User -->
+                <div class="bg-white rounded-3xl shadow-sm border border-pink-100 p-6 hover:shadow-lg transition">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-zinc-500 text-sm">
+                                Total User
+                            </p>
+
+                            <h2 class="text-4xl font-bold mt-3 text-zinc-800">
+                                {{ $stats['users'] }}
+                            </h2>
                     </div>
-                @endforeach
+
+                    <div class="w-14 h-14 rounded-2xl bg-pink-100 flex items-center justify-center text-3xl">
+                        👤
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Frame -->
+        <div class="bg-white rounded-3xl shadow-sm border border-purple-100 p-6 hover:shadow-lg transition">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-zinc-500 text-sm">
+                        Total Frame
+                    </p>
+
+                    <h2 class="text-4xl font-bold mt-3 text-zinc-800">
+                        {{ $stats['frames'] }}
+                    </h2>
+                </div>
+
+                <div class="w-14 h-14 rounded-2xl bg-purple-100 flex items-center justify-center text-3xl">
+                    🖼
+                </div>
+            </div>
+        </div>
+
+        <!-- Photobox -->
+        <div class="bg-white rounded-3xl shadow-sm border border-blue-100 p-6 hover:shadow-lg transition">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-zinc-500 text-sm">
+                        Total Photobox
+                    </p>
+
+                    <h2 class="text-4xl font-bold mt-3 text-zinc-800">
+                        {{ $stats['results'] }}
+                    </h2>
+                </div>
+
+                <div class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center text-3xl">
+                    📸
+                </div>
+            </div>
+        </div>
+
+        <!-- Download -->
+        <div class="bg-white rounded-3xl shadow-sm border border-green-100 p-6 hover:shadow-lg transition">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-zinc-500 text-sm">
+                        Total Download
+                    </p>
+
+                    <h2 class="text-4xl font-bold mt-3 text-zinc-800">
+                        {{ \App\Models\Downloads::count() }}
+                    </h2>
+                </div>
+
+                <div class="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center text-3xl">
+                    ⬇
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@else
+            <div class="bg-gradient-to-r from-pink-50 to-purple-50 rounded-3xl border border-pink-100 shadow-sm p-8">
+
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+
+                    <div>
+
+                        <h2 class="text-3xl font-bold text-pink-600">
+                            📸 Mulai Photobox
+                        </h2>
+
+                        <p class="mt-3 text-zinc-600 max-w-xl">
+                            Pilih frame favoritmu dan buat photobox sekarang.
+                        </p>
+
+                </div>
+
+                <div>
+
+                    <a href="{{ route('photoboxresults.index') }}"
+                        class="inline-flex items-center gap-2 rounded-2xl bg-pink-500 px-6 py-3 font-semibold text-white hover:bg-pink-600 transition">
+
+                            ✨ Buat Photobox
+
+                    </a>
+
+                </div>
+
             </div>
 
-            <div class="bg-white rounded-2xl border border-zinc-200 p-6 shadow-sm">
-                <h3 class="text-lg font-bold mb-4 text-zinc-800">Aktivitas Terbaru</h3>
-                <div class="space-y-4">
-                    @foreach($stats['recent'] as $r)
-                        <div class="flex justify-between border-b pb-3 border-zinc-100 last:border-0 last:pb-0">
-                            <span class="font-medium text-zinc-700">{{ $r->user->name ?? 'User' }}</span>
-                            <span class="text-zinc-400 text-sm italic">{{ $r->frame->frame_name ?? 'Frame' }} • {{ $r->created_at->diffForHumans() }}</span>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        @else
-            <div class="relative overflow-hidden rounded-2xl border border-pink-200 bg-pink-50 p-8 shadow-sm">
-                <h2 class="text-2xl font-bold text-pink-600 mb-3">Mulai Buat Photobox Pertamamu!</h2>
-                <p class="text-zinc-700 mb-4">Ikuti 3 langkah mudah untuk hasil foto estetik:</p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="flex items-center gap-3"><div class="h-8 w-8 rounded-full bg-pink-200 flex items-center justify-center font-bold text-pink-700">1</div><p>Buka <b>Photobox Results</b>.</p></div>
-                    <div class="flex items-center gap-3"><div class="h-8 w-8 rounded-full bg-pink-200 flex items-center justify-center font-bold text-pink-700">2</div><p>Pilih frame & upload foto.</p></div>
-                    <div class="flex items-center gap-3"><div class="h-8 w-8 rounded-full bg-pink-200 flex items-center justify-center font-bold text-pink-700">3</div><p>Klik <b>Generate Magic</b>.</p></div>
-                </div>
-            </div>
+        </div>
 
             <div>
                 <h3 class="text-xl font-bold mb-4 text-zinc-800">Riwayat Fotomu</h3>
