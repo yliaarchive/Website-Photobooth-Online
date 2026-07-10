@@ -34,7 +34,6 @@ new class extends Component
 ?>
 
 <div>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" rel="stylesheet">
     <flux:modal name="create-photobox" class="md:w-[700px]">
         <div class="space-y-6">
             <div>
@@ -78,7 +77,7 @@ new class extends Component
                 <flux:modal.close>
                     <flux:button variant="ghost">Cancel</flux:button>
                 </flux:modal.close>
-                <button type="button" id="cropBtn" onclick="openCropModal()" variant="primary" icon="crop" class="hidden px-4 py-2 text-sm font-semibold rounded-full transition-colors shrink-0">
+                <button type="button" id="cropBtn" onclick="openCropModal()" class="hidden px-4 py-2 text-sm font-semibold rounded-full bg-green-500 text-white hover:bg-green-600 transition-colors shrink-0">
                     Crop Image
                 </button>
                 <flux:button type="button" variant="primary" icon="sparkles" onclick="generateMagic()" wire:loading.attr="disabled" wire:target="form.photos">
@@ -88,8 +87,7 @@ new class extends Component
         </div>
     </flux:modal>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+    @vite('resources/js/photobooth.js')
     <script>
         let cropper = null;
         let croppingImage = null;
