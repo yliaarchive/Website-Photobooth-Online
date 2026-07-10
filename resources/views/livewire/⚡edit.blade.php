@@ -19,13 +19,13 @@ new class extends Component
     {
         return PhotoFrames::all();
     }
-    
+
     #[On('save-final-image')]
     public function saveFinalImage($base64Image, $frameId)
     {
         $this->form->final_image_base64 = $base64Image;
         $this->form->frame_id = $frameId;
-        
+
         $this->form->store();
         $this->dispatch('refresh-results');
         Flux::modal('create-photobox')->close();
@@ -34,6 +34,7 @@ new class extends Component
 ?>
 
 <div>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" rel="stylesheet">
     <flux:modal name="create-photobox" class="md:w-[700px]">
         <div class="space-y-6">
             <div>
@@ -61,6 +62,15 @@ new class extends Component
 
             <div wire:ignore class="flex justify-center bg-gray-100 rounded border overflow-hidden relative" style="height: 500px;">
                 <canvas id="photoboothCanvas"></canvas>
+                <div id="cropStage" class="absolute inset-0 flex-col" style="z-index:10;display:none">
+                    <div class="flex-1 overflow-hidden flex items-center justify-center w-full">
+                        <img id="cropImage" src="" alt="Crop" style="max-width:100%;max-height:100%">
+                    </div>
+                    <div class="flex justify-center gap-2 py-2 bg-white border-t">
+                        <button type="button" onclick="applyCrop()" class="px-4 py-2 text-sm font-semibold rounded-full bg-[#f472b6] text-white hover:bg-[#db60a0] transition-colors">Apply Crop</button>
+                        <button type="button" onclick="closeCropModal()" class="px-4 py-2 text-sm font-semibold rounded-full border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors">Cancel</button>
+                    </div>
+                </div>
             </div>
 
             <div class="flex gap-2 pt-4">
@@ -68,6 +78,9 @@ new class extends Component
                 <flux:modal.close>
                     <flux:button variant="ghost">Cancel</flux:button>
                 </flux:modal.close>
+                <button type="button" id="cropBtn" onclick="openCropModal()" variant="primary" icon="crop" class="hidden px-4 py-2 text-sm font-semibold rounded-full transition-colors shrink-0">
+                    Crop Image
+                </button>
                 <flux:button type="button" variant="primary" icon="sparkles" onclick="generateMagic()" wire:loading.attr="disabled" wire:target="form.photos">
                     Generate Magic
                 </flux:button>
@@ -75,27 +88,50 @@ new class extends Component
         </div>
     </flux:modal>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
     <script>
+        let cropper = null;
+        let croppingImage = null;
+
         function initCanvas() {
             if (typeof fabric !== 'undefined' && !window.canvas) {
                 let canvasEl = document.getElementById('photoboothCanvas');
                 if (canvasEl) {
                     window.canvas = new fabric.Canvas('photoboothCanvas', {
-                        width: 350, 
-                        height: 500, 
+                        width: 350,
+                        height: 500,
                         backgroundColor: '#ffffff'
                     });
+                    attachCropEvents();
                 }
             }
         }
 
+        function attachCropEvents() {
+            window.canvas.on('selection:created', function(e) {
+                if (e.selected && e.selected.length === 1 && e.selected[0].type === 'image') {
+                    document.getElementById('cropBtn').classList.remove('hidden');
+                }
+            });
+            window.canvas.on('selection:updated', function(e) {
+                if (e.selected && e.selected.length === 1 && e.selected[0].type === 'image') {
+                    document.getElementById('cropBtn').classList.remove('hidden');
+                } else {
+                    document.getElementById('cropBtn').classList.add('hidden');
+                }
+            });
+            window.canvas.on('selection:cleared', function() {
+                document.getElementById('cropBtn').classList.add('hidden');
+            });
+        }
+
         document.getElementById('frameSelect').addEventListener('change', function(e) {
             initCanvas();
-            
+
             let selectedOption = this.options[this.selectedIndex];
             let frameUrl = selectedOption.getAttribute('data-url');
-            
+
             if (frameUrl && window.canvas) {
                 fabric.Image.fromURL(frameUrl, function(img) {
                     let scale = Math.min(window.canvas.width / img.width, window.canvas.height / img.height);
@@ -114,7 +150,7 @@ new class extends Component
 
         document.getElementById('photoInput').addEventListener('change', function(e) {
             initCanvas();
-            
+
             let files = e.target.files;
             if (!window.canvas) return;
 
@@ -134,6 +170,69 @@ new class extends Component
             }
         });
 
+        function openCropModal() {
+            let activeObj = window.canvas.getActiveObject();
+            if (!activeObj || activeObj.type !== 'image') return;
+
+            croppingImage = activeObj;
+            let imgEl = document.getElementById('cropImage');
+            let stage = document.getElementById('cropStage');
+
+            stage.style.display = 'flex';
+
+            imgEl.onload = function() {
+                if (cropper) cropper.destroy();
+                cropper = new Cropper(imgEl, {
+                    aspectRatio: NaN,
+                    viewMode: 1,
+                    autoCropArea: 0.8,
+                    responsive: true,
+                    movable: true,
+                    zoomable: true,
+                    rotatable: false,
+                    scalable: false,
+                });
+            };
+            imgEl.onerror = function() {
+                stage.style.display = 'none';
+                alert('Gagal memuat gambar untuk crop.');
+            };
+            imgEl.src = activeObj.getSrc();
+        }
+
+        function applyCrop() {
+            if (!cropper || !croppingImage) return;
+
+            let croppedCanvas = cropper.getCroppedCanvas({
+                maxWidth: 2048,
+                maxHeight: 2048,
+            });
+
+            let croppedDataUrl = croppedCanvas.toDataURL('image/jpeg', 0.95);
+
+            croppingImage.setSrc(croppedDataUrl, function() {
+                window.canvas.renderAll();
+            });
+
+            closeCropModal();
+        }
+
+        function closeCropModal() {
+            if (cropper) {
+                cropper.destroy();
+                cropper = null;
+            }
+            document.getElementById('cropStage').style.display = 'none';
+            croppingImage = null;
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                let stage = document.getElementById('cropStage');
+                if (stage && stage.style.display !== 'none') closeCropModal();
+            }
+        });
+
         function generateMagic() {
             let frameId = document.getElementById('frameSelect').value;
             if (!frameId) {
@@ -148,7 +247,7 @@ new class extends Component
                 let finalImageBase64 = window.canvas.toDataURL({
                     format: 'jpeg',
                     quality: 0.95,
-                    multiplier: 3 
+                    multiplier: 3
                 });
 
                 Livewire.dispatch('save-final-image', { base64Image: finalImageBase64, frameId: frameId });
