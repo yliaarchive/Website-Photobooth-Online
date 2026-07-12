@@ -20,16 +20,20 @@ new class extends Component
         return PhotoFrames::all();
     }
 
-    #[On('save-final-image')]
-    public function saveFinalImage($base64Image, $frameId)
-    {
-        $this->form->final_image_base64 = $base64Image;
-        $this->form->frame_id = $frameId;
+   #[On('save-final-image')]
+public function saveFinalImage($base64Image, $frameId)
+{
+    $this->form->final_image_base64 = $base64Image;
+    $this->form->frame_id = $frameId;
 
-        $this->form->store();
-        $this->dispatch('refresh-results');
-        Flux::modal('create-photobox')->close();
-    }
+    $this->form->store();
+
+    $this->dispatch('refresh-results');
+
+    Flux::modal('create-photobox')->close();
+
+    return redirect()->route('downloads.index');
+}
 };
 ?>
 
