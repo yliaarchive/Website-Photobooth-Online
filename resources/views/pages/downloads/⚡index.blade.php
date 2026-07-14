@@ -13,7 +13,6 @@ new class extends Component
 
     public ?string $previewUrl = null;
     
-    // Variabel untuk menangkap input pencarian
     public string $search = ''; 
 
     #[Computed]
@@ -22,7 +21,6 @@ new class extends Component
         $query = PhotoboxResults::with('frame')
             ->where('user_id', Auth::id());
 
-        // Jika ada input pencarian, filter berdasarkan nama frame
         if ($this->search) {
             $query->whereHas('frame', function($q) {
                 $q->where('nama_frame', 'like', '%' . $this->search . '%');
@@ -136,11 +134,11 @@ new class extends Component
 
         @if(count($this->MyGallery) > 0)
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
 
                 @foreach ($this->MyGallery as $item)
 
-    <div wire:key="gallery-item-{{ $item->id }}" class="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-lg border border-pink-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition duration-300">
+    <div class="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-lg border border-pink-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition duration-300">
 
         <div class="absolute top-4 right-4 z-10">
             <span class="bg-gradient-to-r from-pink-500 to-fuchsia-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">
@@ -213,7 +211,7 @@ new class extends Component
 
         @else
 
-<div class="text-center py-20 bg-gradient-to-br from-pink-50 to-white rounded-3xl border border-pink-200 shadow-lg">
+<div class="text-center py-20 bg-gradient-to-br from-pink-50 to-white rounded-3xl border border-pink-200 shadow-lg mt-8">
 
     <div class="text-7xl mb-4">
         💖
