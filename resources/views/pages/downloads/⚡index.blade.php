@@ -12,7 +12,7 @@ new class extends Component
     public DownloadsForm $form;
 
     public ?string $previewUrl = null;
-    
+
     public string $search = ''; 
 
     #[Computed]
@@ -35,12 +35,12 @@ new class extends Component
         $result = PhotoboxResults::find($resultId);
 
         if ($result) {
-            $this->form->catatDownload($resultId);
+        $this->form->catatDownload($resultId);
 
             return response()->download(
                 storage_path('app/public/' . $result->result_file)
-            );
-        }
+        );
+    }
     }
 
     public function showPreview($filename)
