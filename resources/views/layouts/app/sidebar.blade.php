@@ -3,8 +3,11 @@
     <head>
         @include('partials.head')
     </head>
-    <body class="min-h-screen bg-white dark:bg-zinc-800">
-        <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+    <body
+    class="min-h-screen
+    bg-[radial-gradient(circle_at_top_left,_#ffd6e7_0%,_transparent_35%),radial-gradient(circle_at_bottom_right,_#ffc2d1_0%,_transparent_30%),linear-gradient(135deg,#fff0f6_0%,#ffe5ec_40%,#ffd6e7_100%)]
+    bg-fixed">
+        <flux:sidebar sticky collapsible="mobile" class="border-e border-pink-200 bg-gradient-to-b from-pink-100 via-pink-50 to-rose-100 backdrop-blur-xl shadow-2xl dark:border-zinc-700 dark:bg-zinc-900">
             <flux:sidebar.header>
                 <x-app-logo :sidebar="true" href="{{ route('dashboard') }}" wire:navigate />
                 <flux:sidebar.collapse class="lg:hidden" />
