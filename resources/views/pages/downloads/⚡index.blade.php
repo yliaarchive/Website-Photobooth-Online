@@ -12,7 +12,7 @@ new class extends Component
     public DownloadsForm $form;
 
     public ?string $previewUrl = null;
-    
+
     public string $search = ''; 
 
     #[Computed]
