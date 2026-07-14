@@ -12,15 +12,25 @@ new class extends Component
     public DownloadsForm $form;
 
     public ?string $previewUrl = null;
+    
+    // Variabel untuk menangkap input pencarian
+    public string $search = ''; 
 
     #[Computed]
     public function MyGallery()
-{
-    return PhotoboxResults::with('frame')
-        ->where('user_id', Auth::id())
-        ->latest()
-        ->get();
-}
+    {
+        $query = PhotoboxResults::with('frame')
+            ->where('user_id', Auth::id());
+
+        // Jika ada input pencarian, filter berdasarkan nama frame
+        if ($this->search) {
+            $query->whereHas('frame', function($q) {
+                $q->where('nama_frame', 'like', '%' . $this->search . '%');
+            });
+        }
+
+        return $query->latest()->get();
+    }
 
     public function downloadImage($resultId)
     {
@@ -104,7 +114,8 @@ new class extends Component
 
         <input
             type="text"
-            placeholder="Cari photobox..."
+            wire:model.live="search" 
+            placeholder="Cari nama frame..."
             class="w-full rounded-xl border border-pink-200 pl-10 pr-4 py-3 focus:ring-2 focus:ring-pink-300">
 
     </div>
@@ -129,9 +140,8 @@ new class extends Component
 
                 @foreach ($this->MyGallery as $item)
 
-    <div class="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-lg border border-pink-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition duration-300">
+    <div wire:key="gallery-item-{{ $item->id }}" class="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-lg border border-pink-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition duration-300">
 
-        <!-- Badge -->
         <div class="absolute top-4 right-4 z-10">
             <span class="bg-gradient-to-r from-pink-500 to-fuchsia-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">
                 📸 Photobox
@@ -144,7 +154,7 @@ new class extends Component
                                 <img
                                     src="{{ asset('storage/'.$item->result_file) }}"
                                     alt="Photobox Result"
-                                    class="max-h-full object-contain rounded-xl transition duration-300 hover:scale-105"
+                                    class="max-h-full object-contain rounded-xl transition duration-300 hover:scale-105">
                             
                             @else
 
@@ -173,19 +183,21 @@ new class extends Component
     <div class="space-y-2">
 
 <flux:button
-class="w-full rounded-xl"
-variant="filled"
-icon="eye">
+    class="w-full rounded-xl"
+    variant="filled"
+    icon="eye"
+    wire:click="showPreview('{{ $item->result_file }}')">
 
-Preview
+    Preview
 
 </flux:button>
 
 <flux:button
-class="w-full rounded-xl bg-pink-500 hover:bg-pink-600 text-white"
-icon="arrow-down-tray">
+    class="w-full rounded-xl bg-pink-500 hover:bg-pink-600 text-white"
+    icon="arrow-down-tray"
+    wire:click="downloadImage({{ $item->id }})">
 
-Download
+    Download
 
 </flux:button>
 
@@ -231,7 +243,6 @@ Download
 
     </div>
 
-    <!-- Modal Preview -->
     <flux:modal name="preview-modal" class="md:w-[700px]">
 
         <div class="p-5 bg-pink-50 rounded-2xl">

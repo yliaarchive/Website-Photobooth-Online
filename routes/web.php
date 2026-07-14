@@ -17,6 +17,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::livewire('Downloads', 'pages::downloads.index')
         ->name('downloads.index');
+
+    // 👇 UserPhotos dipindah ke sini agar user biasa bisa mengaksesnya 👇
+    Route::livewire('UserPhotos', 'pages::userphotos.index')
+        ->name('userphotos.index');
 });
 
 
@@ -30,9 +34,8 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
 
     Route::livewire('PhotoFrames', 'pages::photoframes.index')
         ->name('photoframes.index');
-
-    Route::livewire('UserPhotos', 'pages::userphotos.index')
-        ->name('userphotos.index');
+        
+    // UserPhotos sudah dihapus dari grup ini
 });
 
 require __DIR__.'/settings.php';

@@ -17,7 +17,6 @@
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
 
-                    <!-- BATAS KHUSUS ADMIN MULAI DI SINI -->
                     @if (auth()->user()?->role === 'admin')
                         <flux:sidebar.item icon="rectangle-group" :href="route('framecategories.index')" :current="request()->routeIs('framecategories.index')" wire:navigate>
                             {{ __('Frame Categories') }}
@@ -26,12 +25,10 @@
                         <flux:sidebar.item icon="swatch" :href="route('photoframes.index')" :current="request()->routeIs('photoframes.index')" wire:navigate>
                             {{ __('Photo Frames') }}
                         </flux:sidebar.item>
-
-                        <flux:sidebar.item icon="camera" :href="route('userphotos.index')" :current="request()->routeIs('userphotos.index')" wire:navigate>
-                            {{ __('User Photos') }}
-                        </flux:sidebar.item>
                     @endif
-                    <!-- BATAS KHUSUS ADMIN BERAKHIR DI SINI -->
+                    <flux:sidebar.item icon="camera" :href="route('userphotos.index')" :current="request()->routeIs('userphotos.index')" wire:navigate>
+                        {{ __('User Photos') }}
+                    </flux:sidebar.item>
 
                     <flux:sidebar.item icon="sparkles" :href="route('photoboxresults.index')" :current="request()->routeIs('photoboxresults.index')" wire:navigate>
                         {{ __('Photobox Results') }}
@@ -59,7 +56,6 @@
             <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
         </flux:sidebar>
 
-        <!-- Mobile User Menu -->
         <flux:header class="lg:hidden">
             <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
 
