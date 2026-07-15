@@ -12,7 +12,7 @@
 
             © {{ date('Y') }} Photobooth Online.
 
-            Made with 💖
+            Dibuat Oleh YSH 💖
 
         </p>
 

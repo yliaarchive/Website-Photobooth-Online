@@ -87,7 +87,7 @@
                         </p>
 
                         <a
-                            href="{{ route('login') }}"
+                            href="{{ route('photobox.create', $frame->id) }}"
                             class="mt-6 flex justify-center rounded-full bg-pink-500 py-3 font-semibold text-white hover:bg-pink-600 transition">
 
                             Gunakan Frame

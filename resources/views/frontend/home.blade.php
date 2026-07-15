@@ -85,7 +85,7 @@
                                 {{ $frame->frameCategories->nama_kategori ?? 'Photobooth' }}
                             </span>
                         </div>
-                        <a href="{{ route('login') }}" class="mt-6 flex justify-center rounded-full bg-pink-500 hover:bg-pink-600 py-3 font-semibold text-white transition shadow-md hover:shadow-lg">
+                        <a href="{{ route('photobox.create', $frame->id) }}" class="mt-6 flex justify-center rounded-full bg-pink-500 hover:bg-pink-600 py-3 font-semibold text-white transition shadow-md hover:shadow-lg">
                             Gunakan Frame
                         </a>
                     </div>
