@@ -8,6 +8,10 @@ Route::get('/', function () {
 Route::get('/frames', function () {
     return view('frontend.frames'); 
 })->name('frames');
+Route::get('/gallery', function () {
+    $results = \App\Models\PhotoboxResults::latest()->paginate(12);
+    return view('frontend.gallery', compact('results'));
+})->name('gallery');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 

@@ -13,8 +13,15 @@ class PhotoFrames extends Model
         'gambar_frame',
     ];
 
+    public function results()
+    {
+        return $this->hasMany(PhotoboxResults::class, 'frame_id');
+    }
+
     public function frameCategories()
     {
         return $this->belongsTo(FrameCategories::class, 'category_id');
     }
+
+    
 }

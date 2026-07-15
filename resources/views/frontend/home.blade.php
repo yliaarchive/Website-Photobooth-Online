@@ -1,3 +1,12 @@
+@php
+    use App\Models\PhotoFrames;
+    
+    $allFrames = PhotoFrames::with('frameCategories')->get();
+    $displayFrames = $allFrames->sortByDesc(function($frame) {
+        return $frame->results()->count();
+    })->take(4);
+@endphp
+
 @extends('layouts.frontend')
 
 @section('content')
@@ -28,23 +37,22 @@
                 
                 <div class="flex flex-wrap gap-5 mt-10">
                     <a href="{{ route('frames') }}" 
-                        class="px-8 py-4 rounded-full bg-pink-500 hover:bg-pink-600 text-white font-bold shadow-xl hover:-translate-y-1 transition duration-300">
+                       class="px-8 py-4 rounded-full bg-pink-500 hover:bg-pink-600 text-white font-bold shadow-xl hover:-translate-y-1 transition duration-300">
                         📸 Buat Photobox
                     </a>
     
-                    <a href="#gallery" 
-                        class="px-8 py-4 rounded-full border-2 border-pink-500 text-pink-500 hover:bg-pink-50 font-bold transition duration-300">
+                    <a href="{{ route('gallery') }}" 
+                       class="px-8 py-4 rounded-full border-2 border-pink-500 text-pink-500 hover:bg-pink-50 font-bold transition duration-300">
                         Lihat Galeri
                     </a>
                 </div>
             </div>
 
             <div class="flex justify-center relative">
-                <div class="w-[450px] h-[450px] rounded-full bg-gradient-to-br from-pink-300 to-purple-300 flex items-center justify-center text-[160px] shadow-[0_20px_50px_rgba(236,72,153,0.3)] animate-float border-8 border-white">
+                <div class="w-[450px] h-[450px] rounded-full bg-gradient-to-br from-pink-300 to-purple-300 flex items-center justify-center text-[160px] shadow-[0_20px_50px_rgba(236,72,153,0.3)] border-8 border-white">
                     📸
-                </div>     
+                </div>    
             </div>
-
         </div>
     </div>
 </section>
@@ -57,12 +65,13 @@
                 ✨ Explore Collection
             </span>
             <h2 class="text-4xl font-black text-gray-800">
-                Pilih Frame Favoritmu
+                Popular Frames
             </h2>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            @forelse($frames ?? [] as $frame)
+            {{-- MENGGANTI $frames DENGAN $displayFrames --}}
+            @forelse($displayFrames as $frame)
                 <div class="bg-white rounded-3xl shadow-[0_4px_20px_rgba(236,72,153,0.08)] border border-pink-50 overflow-hidden hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(236,72,153,0.2)] transition duration-300 group">
                     
                     <div class="relative h-80 overflow-hidden bg-pink-50">
@@ -83,13 +92,12 @@
                 </div>
             @empty
                 <div class="col-span-4 text-center py-20 bg-pink-50/50 rounded-3xl border-2 border-dashed border-pink-200">
-                    <div class="text-6xl mb-4 animate-bounce">😿</div>
+                    <div class="text-6xl mb-4">😿</div>
                     <h3 class="text-2xl font-bold text-pink-500">Belum Ada Frame</h3>
-                    <p class="mt-2 text-gray-500">Admin belum menambahkan koleksi frame baru nih.</p>
+                    <p class="mt-2 text-gray-500">Nantikan Frame Baru.</p>
                 </div>
             @endforelse
         </div>
-
     </div>
 </section>
 

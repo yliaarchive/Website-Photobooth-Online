@@ -33,8 +33,8 @@
             <a href="{{ route('frames') }}" class="text-gray-700 font-semibold hover:text-pink-500 transition">
                 Explore Frame
             </a>
-            <a href="#gallery" class="text-gray-700 font-semibold hover:text-pink-500 transition">
-                Gallery
+            <a href="{{ route('gallery') }}" class="text-gray-700 hover:text-pink-500 font-bold transition">
+                Galeri
             </a>
         </div>
 
