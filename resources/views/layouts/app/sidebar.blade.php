@@ -17,50 +17,60 @@
                 <flux:sidebar.group :heading="__('Platform')" class="grid">
                     
                     <flux:sidebar.item 
-    icon="home" 
-    :href="route('dashboard')" 
-    :current="request()->routeIs('dashboard')" 
-    class="{{ request()->routeIs('dashboard') ? 'neon-sidebar-active' : 'neon-sidebar-item' }}" 
-    wire:navigate>
-    {{ __('Dashboard') }}
-</flux:sidebar.item>
+                        icon="home" 
+                        :href="route('dashboard')" 
+                        :current="request()->routeIs('dashboard')" 
+                        class="{{ request()->routeIs('dashboard') ? 'neon-sidebar-active' : 'neon-sidebar-item' }}" 
+                        wire:navigate>
+                        {{ __('Dashboard') }}
+                    </flux:sidebar.item>
 
                     @if (auth()->user()?->role === 'admin')
                         <flux:sidebar.item 
-    icon="swatch" 
-    :href="route('photoframes.index')" 
-    :current="request()->routeIs('photoframes.index')" 
-    class="{{ request()->routeIs('photoframes.index') ? 'neon-sidebar-active' : 'neon-sidebar-item' }}"
-    wire:navigate>
-    {{ __('Photo Frames') }}
-</flux:sidebar.item>
+                            icon="rectangle-stack" 
+                            :href="route('framecategories.index')" 
+                            :current="request()->routeIs('framecategories.index')" 
+                            class="{{ request()->routeIs('framecategories.index') ? 'neon-sidebar-active' : 'neon-sidebar-item' }}"
+                            wire:navigate>
+                            {{ __('Frame Categories') }}
+                        </flux:sidebar.item>
+
+                        <flux:sidebar.item 
+                            icon="swatch" 
+                            :href="route('photoframes.index')" 
+                            :current="request()->routeIs('photoframes.index')" 
+                            class="{{ request()->routeIs('photoframes.index') ? 'neon-sidebar-active' : 'neon-sidebar-item' }}"
+                            wire:navigate>
+                            {{ __('Photo Frames') }}
+                        </flux:sidebar.item>
                     @endif
+
                     <flux:sidebar.item 
-    icon="users" 
-    :href="route('userphotos.index')" 
-    :current="request()->routeIs('userphotos.index')" 
-    class="{{ request()->routeIs('userphotos.index') ? 'neon-sidebar-active' : 'neon-sidebar-item' }}"
-    wire:navigate>
-    {{ __('User Photos') }}
-</flux:sidebar.item>
+                        icon="users" 
+                        :href="route('userphotos.index')" 
+                        :current="request()->routeIs('userphotos.index')" 
+                        class="{{ request()->routeIs('userphotos.index') ? 'neon-sidebar-active' : 'neon-sidebar-item' }}"
+                        wire:navigate>
+                        {{ __('User Photos') }}
+                    </flux:sidebar.item>
 
                    <flux:sidebar.item 
-    icon="sparkles" 
-    :href="route('photoboxresults.index')" 
-    :current="request()->routeIs('photoboxresults.index')" 
-    class="{{ request()->routeIs('photoboxresults.index') ? 'neon-sidebar-active' : 'neon-sidebar-item' }}"
-    wire:navigate>
-    {{ __('Photobox Results') }}
-</flux:sidebar.item>
+                        icon="sparkles" 
+                        :href="route('photoboxresults.index')" 
+                        :current="request()->routeIs('photoboxresults.index')" 
+                        class="{{ request()->routeIs('photoboxresults.index') ? 'neon-sidebar-active' : 'neon-sidebar-item' }}"
+                        wire:navigate>
+                        {{ __('Photobox Results') }}
+                    </flux:sidebar.item>
 
                     <flux:sidebar.item 
-    icon="arrow-down-tray" 
-    :href="route('downloads.index')" 
-    :current="request()->routeIs('downloads.index')" 
-    class="{{ request()->routeIs('downloads.index') ? 'neon-sidebar-active' : 'neon-sidebar-item' }}"
-    wire:navigate>
-    {{ __('Downloads') }}
-</flux:sidebar.item>
+                        icon="arrow-down-tray" 
+                        :href="route('downloads.index')" 
+                        :current="request()->routeIs('downloads.index')" 
+                        class="{{ request()->routeIs('downloads.index') ? 'neon-sidebar-active' : 'neon-sidebar-item' }}"
+                        wire:navigate>
+                        {{ __('Downloads') }}
+                    </flux:sidebar.item>
                     
                 </flux:sidebar.group>
             </flux:sidebar.nav>

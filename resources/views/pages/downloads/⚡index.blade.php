@@ -111,10 +111,10 @@ new class extends Component
         </svg>
 
         <input
-            type="text"
-            wire:model.live="search" 
-            placeholder="Cari nama frame..."
-            class="w-full rounded-xl border border-pink-200 pl-10 pr-4 py-3 focus:ring-2 focus:ring-pink-300">
+        type="text"
+        wire:model.live="search" 
+        placeholder="Cari nama frame..."
+        class="w-full rounded-xl border border-pink-200 bg-white text-gray-700 placeholder-gray-400 pl-10 pr-4 py-3 focus:ring-2 focus:ring-pink-300 transition-colors">
 
     </div>
 

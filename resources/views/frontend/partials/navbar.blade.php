@@ -27,24 +27,16 @@
         <!-- Menu -->
 
         <div class="hidden lg:flex items-center gap-10">
-
-            <a href="/" class="font-semibold hover:text-pink-500">
-
+            <a href="/" class="text-gray-700 font-semibold hover:text-pink-500 transition">
                 Home
-
             </a>
-
-            <a href="/frames" class="font-semibold hover:text-pink-500">
-
+            <a href="{{ route('frames') }}" class="text-gray-700 font-semibold hover:text-pink-500 transition">
                 Explore Frame
-
             </a>
-
-            <a href="#gallery" class="font-semibold hover:text-pink-500">
-
+            <a href="#gallery" class="text-gray-700 font-semibold hover:text-pink-500 transition">
                 Gallery
-
             </a>
+        </div>
 
             @guest
 

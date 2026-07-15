@@ -2,7 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-
+Route::get('/', function () {
+    return view('frontend.home');
+})->name('home');
+Route::get('/frames', function () {
+    return view('frontend.frames'); 
+})->name('frames');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 

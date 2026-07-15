@@ -102,10 +102,10 @@ new class extends Component
                         <svg class="w-5 h-5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     </div>
                     <input
-                        type="text"
-                        wire:model.live.debounce.300ms="search"
-                        placeholder="Cari nama user atau frame..."
-                        class="w-full rounded-full border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 pl-10 pr-4 py-2.5 text-sm focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none shadow-sm transition-all">
+                    type="text"
+                    wire:model.live.debounce.300ms="search"
+                    placeholder="Cari nama user atau frame..."
+                    class="w-full rounded-full border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-200 placeholder-zinc-400 dark:placeholder-zinc-500 pl-10 pr-4 py-2.5 text-sm focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none shadow-sm transition-all">
                 </div>
             </div>
         </div>

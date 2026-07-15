@@ -14,7 +14,7 @@
 </head>
 
 <body class="bg-pink-50 text-gray-700">
-
+    
     @include('frontend.partials.navbar')
 
     <main>
