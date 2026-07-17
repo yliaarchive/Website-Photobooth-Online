@@ -10,11 +10,8 @@ Route::get('/frames', function () {
     return view('frontend.frames'); 
 })->name('frames');
 Route::get('/create/{frame}', function ($frame) {
-
     $frame = PhotoFrames::findOrFail($frame);
-
     return view('frontend.create', compact('frame'));
-
 })->name('frontend.create');
 Route::get('/gallery', function () {
     $results = \App\Models\PhotoboxResults::latest()->paginate(12);

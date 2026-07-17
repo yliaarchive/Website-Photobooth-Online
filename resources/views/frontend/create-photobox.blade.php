@@ -49,12 +49,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
 <script>
-    // --- 1. INISIALISASI CANVAS ---
     const canvas = new fabric.Canvas('photoboxCanvas', {
         backgroundColor: '#ffffff'
     });
     
-    // Load Frame
     const frameUrl = "{{ asset('storage/' . $frame->gambar_frame) }}";
     fabric.Image.fromURL(frameUrl, function(img) {
         let scale = Math.min(canvas.width / img.width, canvas.height / img.height);
@@ -65,7 +63,6 @@
         });
     }, { crossOrigin: 'anonymous' });
 
-    // --- 2. LOGIKA UPLOAD FOTO ---
     document.getElementById('photoInput').addEventListener('change', function(e) {
         let file = e.target.files[0];
         if (!file) return;
@@ -83,18 +80,15 @@
         };
         reader.readAsDataURL(file);
         
-        // Reset input agar bisa upload foto yang sama jika dihapus
         e.target.value = ''; 
     });
 
-    // --- 3. LOGIKA CROP FOTO ---
     let cropper = null;
     let croppingImage = null;
     const cropBtn = document.getElementById('cropBtn');
     const cropStage = document.getElementById('cropStage');
     const cropImageEl = document.getElementById('cropImage');
 
-    // Tampilkan tombol crop HANYA saat foto diklik
     canvas.on('selection:created', checkSelection);
     canvas.on('selection:updated', checkSelection);
     canvas.on('selection:cleared', function() {
@@ -109,7 +103,6 @@
         }
     }
 
-    // Buka layar Crop
     function openCropModal() {
         let activeObj = canvas.getActiveObject();
         if (!activeObj || activeObj.type !== 'image') return;
@@ -131,11 +124,9 @@
             });
         };
         
-        // Ambil sumber gambar asli yang belum terpengaruh rotasi/skala canvas
         cropImageEl.src = activeObj.getSrc();
     }
 
-    // Terapkan hasil Crop kembali ke Canvas
     function applyCrop() {
         if (!cropper || !croppingImage) return;
 
@@ -146,9 +137,7 @@
 
         let croppedDataUrl = croppedCanvas.toDataURL('image/png', 1.0);
 
-        // Update gambar di canvas dengan hasil crop
         croppingImage.setSrc(croppedDataUrl, function() {
-            // Kembalikan proporsi skala agar tidak distorsi
             croppingImage.set({ scaleX: 1, scaleY: 1 });
             croppingImage.scaleToWidth(200); 
             canvas.renderAll();
@@ -157,7 +146,6 @@
         closeCropModal();
     }
 
-    // Tutup layar Crop
     function closeCropModal() {
         if (cropper) {
             cropper.destroy();
@@ -168,7 +156,6 @@
         croppingImage = null;
     }
 
-    // --- 4. LOGIKA SIMPAN (POST KE SERVER) ---
     function generateResult() {
         canvas.discardActiveObject();
         canvas.renderAll();
